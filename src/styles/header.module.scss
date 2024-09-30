@@ -1,0 +1,33 @@
+.header_container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 32px;
+    background-color: #202d48;
+    color: white;
+
+    .header_title h1 {
+        font-size: x-large;
+        font-weight: bold;
+    }
+    .header_title p {
+        font-style: italic;
+        font-weight: 400;
+        color: rgb(117, 117, 46);
+    }
+
+    button {
+        border: none;
+        background-color: #334977;
+        color: white;
+        font-weight: 400;
+        font-size: smaller;
+        padding-inline: 32px;
+        border-radius: 32px;
+        &:hover {
+            cursor: pointer;
+            background: linear-gradient(to right, #2258cc, #1d38b4);
+        }
+    }
+}

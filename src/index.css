@@ -1,0 +1,17 @@
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+body {
+    max-width: 1440px;
+    height: 100svh;
+}
+
+.container {
+    width: 100dvw;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+}
