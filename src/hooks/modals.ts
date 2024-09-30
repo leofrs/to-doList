@@ -7,7 +7,6 @@ export default function ModalsHook() {
 
     const handleAdd = () => {
         setAddIsOpen(!addIsOpen);
-        alert("Botão clicado");
     };
 
     const handleExcluir = () => {

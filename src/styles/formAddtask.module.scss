@@ -1,0 +1,49 @@
+form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: auto;
+
+    input {
+        padding: 10px;
+        margin: 10px 0;
+        border: 2px solid #007bff; // Azul
+        border-radius: 5px;
+        font-size: 16px;
+
+        &:focus {
+            border-color: #0056b3; // Azul mais escuro
+            outline: none;
+        }
+    }
+
+    span {
+        color: #d9534f; // Vermelho para erros
+        font-size: 12px;
+        margin-top: -5px;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: space-between;
+
+        .btn_clicks {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: #0056b3; // Azul mais escuro
+            }
+        }
+    }
+}
