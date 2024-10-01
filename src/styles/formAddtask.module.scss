@@ -7,12 +7,12 @@ form {
     input {
         padding: 10px;
         margin: 10px 0;
-        border: 2px solid #007bff; // Azul
+        border: 2px solid #007bff;
         border-radius: 5px;
         font-size: 16px;
 
         &:focus {
-            border-color: #0056b3; // Azul mais escuro
+            border-color: #0056b3;
             outline: none;
         }
     }
