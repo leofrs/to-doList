@@ -1,12 +1,31 @@
-import { tarefas } from "../../db/tarefas";
+import { useEffect, useState } from "react";
 import ModalsHook from "../../hooks/modals";
 import stylesContent from "../../styles/content.module.scss";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Options from "../modals/options";
+import { FetchTasks } from "../../api/tasks";
+
+export interface Tarefa {
+    id: number;
+    title: string;
+    description: string;
+    date: string;
+}
 
 export default function Fazendo() {
-    const tarefasAFazer = tarefas.filter((tarefa) => tarefa.aFazer);
     const { optionIsOpen, handleOptions, tarefaId } = ModalsHook();
+    const [tarefasAFazer, setTarefasAFazer] = useState<Tarefa[]>([]);
+
+    useEffect(() => {
+        const getTasks = async () => {
+            const fetchTasks = new FetchTasks();
+            const tasks = await fetchTasks.getAll();
+            setTarefasAFazer(tasks);
+        };
+
+        getTasks();
+    }, []);
+
     return (
         <div className={stylesContent.content_cards}>
             {tarefasAFazer.length > 0 ? (
@@ -32,17 +51,13 @@ export default function Fazendo() {
                                 />
                             ) : null}
                         </div>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Doloribus, dolor eveniet excepturi nesciunt
-                            aliquid aspernatur quas modi ea!
-                        </p>
-                        <span>30/09/2024</span>
+                        <p>{tarefa.description}</p>
+                        <span>{tarefa.date}</span>
                     </div>
                 ))
             ) : (
                 <div>
-                    <p>Nenhuma tarefa sendo feita</p>
+                    <p>Nenhuma tarefa à fazer</p>
                 </div>
             )}
         </div>
