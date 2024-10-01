@@ -1,13 +1,25 @@
-import { tarefas } from "../../db/tarefas";
+import ModalsHook from "../../hooks/modals";
 import stylesContent from "../../styles/content.module.scss";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import Options from "../modals/options";
+
+import TarefasHook from "../../hooks/tarefas";
 
 export default function Feito() {
-    const tarefasFeitas = tarefas.filter((tarefa) => tarefa.feito);
+    const { optionIsOpen, handleOptions, tarefaId } = ModalsHook();
+    const { tarefas, loading, ShowTarefas } = TarefasHook();
+
+    const tarefasFeitas = tarefas.filter((tarefa) => tarefa.feito === true);
+
+    ShowTarefas();
 
     return (
-        <>
-            {tarefasFeitas.length > 0 ? (
+        <div className={stylesContent.content_cards}>
+            {loading ? (
+                <div>
+                    <p>Carregando tarefas...</p>
+                </div>
+            ) : tarefasFeitas.length > 0 ? (
                 tarefasFeitas.map((tarefa) => (
                     <div
                         key={tarefa.id}
@@ -18,24 +30,27 @@ export default function Feito() {
                             <button
                                 type="button"
                                 title="details"
-                                onClick={() => alert("Clicado")}
+                                onClick={() => handleOptions(tarefa.id)}
                             >
                                 <BsThreeDotsVertical />
                             </button>
+                            {optionIsOpen && tarefaId === tarefa.id ? (
+                                <Options
+                                    handleOptions={handleOptions}
+                                    tarefaId={tarefa.id}
+                                    tarefaTitle={tarefa.title}
+                                />
+                            ) : null}
                         </div>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Doloribus, dolor eveniet excepturi nesciunt
-                            aliquid aspernatur quas modi ea!
-                        </p>
-                        <span>30/09/2024</span>
+                        <p>{tarefa.description}</p>
+                        <span>{tarefa.date}</span>
                     </div>
                 ))
             ) : (
                 <div>
-                    <p>Nenhuma tarefa concluida</p>
+                    <p>Nenhuma tarefa feita</p>
                 </div>
             )}
-        </>
+        </div>
     );
 }

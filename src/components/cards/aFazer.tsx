@@ -1,34 +1,25 @@
-import { useEffect, useState } from "react";
 import ModalsHook from "../../hooks/modals";
 import stylesContent from "../../styles/content.module.scss";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Options from "../modals/options";
-import { FetchTasks } from "../../api/tasks";
 
-export interface Tarefa {
-    id: number;
-    title: string;
-    description: string;
-    date: string;
-}
+import TarefasHook from "../../hooks/tarefas";
 
-export default function Fazendo() {
+export default function AFazer() {
     const { optionIsOpen, handleOptions, tarefaId } = ModalsHook();
-    const [tarefasAFazer, setTarefasAFazer] = useState<Tarefa[]>([]);
+    const { tarefas, loading, ShowTarefas } = TarefasHook();
 
-    useEffect(() => {
-        const getTasks = async () => {
-            const fetchTasks = new FetchTasks();
-            const tasks = await fetchTasks.getAll();
-            setTarefasAFazer(tasks);
-        };
+    const tarefasAFazer = tarefas.filter((tarefa) => tarefa.aFazer === true);
 
-        getTasks();
-    }, []);
+    ShowTarefas();
 
     return (
         <div className={stylesContent.content_cards}>
-            {tarefasAFazer.length > 0 ? (
+            {loading ? (
+                <div>
+                    <p>Carregando tarefas...</p>
+                </div>
+            ) : tarefasAFazer.length > 0 ? (
                 tarefasAFazer.map((tarefa) => (
                     <div
                         key={tarefa.id}

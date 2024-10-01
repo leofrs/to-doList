@@ -1,13 +1,25 @@
-import { tarefas } from "../../db/tarefas";
+import ModalsHook from "../../hooks/modals";
 import stylesContent from "../../styles/content.module.scss";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import Options from "../modals/options";
+
+import TarefasHook from "../../hooks/tarefas";
 
 export default function Fazendo() {
-    const tarefasFazendo = tarefas.filter((tarefa) => tarefa.fazendo);
+    const { optionIsOpen, handleOptions, tarefaId } = ModalsHook();
+    const { tarefas, loading, ShowTarefas } = TarefasHook();
+
+    const tarefasFazendo = tarefas.filter((tarefa) => tarefa.fazendo === true);
+
+    ShowTarefas();
 
     return (
-        <>
-            {tarefasFazendo.length > 0 ? (
+        <div className={stylesContent.content_cards}>
+            {loading ? (
+                <div>
+                    <p>Carregando tarefas...</p>
+                </div>
+            ) : tarefasFazendo.length > 0 ? (
                 tarefasFazendo.map((tarefa) => (
                     <div
                         key={tarefa.id}
@@ -18,17 +30,20 @@ export default function Fazendo() {
                             <button
                                 type="button"
                                 title="details"
-                                onClick={() => alert("Clicado")}
+                                onClick={() => handleOptions(tarefa.id)}
                             >
                                 <BsThreeDotsVertical />
                             </button>
+                            {optionIsOpen && tarefaId === tarefa.id ? (
+                                <Options
+                                    handleOptions={handleOptions}
+                                    tarefaId={tarefa.id}
+                                    tarefaTitle={tarefa.title}
+                                />
+                            ) : null}
                         </div>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Doloribus, dolor eveniet excepturi nesciunt
-                            aliquid aspernatur quas modi ea!
-                        </p>
-                        <span>30/09/2024</span>
+                        <p>{tarefa.description}</p>
+                        <span>{tarefa.date}</span>
                     </div>
                 ))
             ) : (
@@ -36,6 +51,6 @@ export default function Fazendo() {
                     <p>Nenhuma tarefa sendo feita</p>
                 </div>
             )}
-        </>
+        </div>
     );
 }

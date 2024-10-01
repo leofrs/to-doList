@@ -1,4 +1,4 @@
-import { Tarefa } from "../components/cards/aFazer";
+import { CreateTarefa } from "../@types/tarefa";
 
 const urlBase = import.meta.env.VITE_API_BASE_URL;
 
@@ -18,7 +18,7 @@ export class FetchTasks {
         }
     }
 
-    async createTask({ title, description, date }: Tarefa) {
+    async createTask({ title, description, date }: CreateTarefa) {
         try {
             const resposta = await fetch(`${urlBase}/api/v1/create-task`, {
                 method: "POST",
