@@ -13,3 +13,11 @@ export interface CreateTarefa {
     description: string;
     date: string;
 }
+
+export interface UpdatedTarefa {
+    title: string;
+    description: string;
+    aFazer: boolean;
+    fazendo: boolean;
+    feito: boolean;
+}

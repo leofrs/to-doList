@@ -7,7 +7,8 @@ import TarefasHook from "../../hooks/tarefas";
 
 export default function Feito() {
     const { optionIsOpen, handleOptions, tarefaId } = ModalsHook();
-    const { tarefas, loading, ShowTarefas } = TarefasHook();
+    const { tarefas, loading, ShowTarefas, handleAFazer, handleFazendo } =
+        TarefasHook();
 
     const tarefasFeitas = tarefas.filter((tarefa) => tarefa.feito === true);
 
@@ -20,32 +21,62 @@ export default function Feito() {
                     <p>Carregando tarefas...</p>
                 </div>
             ) : tarefasFeitas.length > 0 ? (
-                tarefasFeitas.map((tarefa) => (
-                    <div
-                        key={tarefa.id}
-                        className={stylesContent.content_title}
-                    >
-                        <div>
-                            <h6>{tarefa.title}</h6>
-                            <button
-                                type="button"
-                                title="details"
-                                onClick={() => handleOptions(tarefa.id)}
-                            >
-                                <BsThreeDotsVertical />
-                            </button>
-                            {optionIsOpen && tarefaId === tarefa.id ? (
-                                <Options
-                                    handleOptions={handleOptions}
-                                    tarefaId={tarefa.id}
-                                    tarefaTitle={tarefa.title}
-                                />
-                            ) : null}
+                tarefasFeitas.map((tarefa) => {
+                    const { id, title, description, date } = tarefa;
+                    return (
+                        <div key={id} className={stylesContent.content_title}>
+                            <div>
+                                <h6>{title}</h6>
+                                <button
+                                    type="button"
+                                    title="details"
+                                    onClick={() => handleOptions(id)}
+                                >
+                                    <BsThreeDotsVertical />
+                                </button>
+                                {optionIsOpen && tarefaId === id ? (
+                                    <Options
+                                        handleOptions={handleOptions}
+                                        tarefaId={id}
+                                        tarefaTitle={title}
+                                    />
+                                ) : null}
+                            </div>
+                            <p>{description}</p>
+                            <span>{date}</span>
+                            <div>
+                                <span
+                                    className={stylesContent.handleBTN}
+                                    onClick={() =>
+                                        handleAFazer(id, {
+                                            title,
+                                            description,
+                                            aFazer: true,
+                                            fazendo: false,
+                                            feito: false,
+                                        })
+                                    }
+                                >
+                                    Marcar como para fazer
+                                </span>
+                                <span
+                                    className={stylesContent.handleBTN}
+                                    onClick={() =>
+                                        handleFazendo(id, {
+                                            title,
+                                            description,
+                                            aFazer: false,
+                                            fazendo: true,
+                                            feito: false,
+                                        })
+                                    }
+                                >
+                                    Marcar como fazendo
+                                </span>
+                            </div>
                         </div>
-                        <p>{tarefa.description}</p>
-                        <span>{tarefa.date}</span>
-                    </div>
-                ))
+                    );
+                })
             ) : (
                 <div>
                     <p>Nenhuma tarefa feita</p>

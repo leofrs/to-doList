@@ -1,4 +1,4 @@
-import { CreateTarefa } from "../@types/tarefa";
+import { CreateTarefa, UpdatedTarefa } from "../@types/tarefa";
 
 const urlBase = import.meta.env.VITE_API_BASE_URL;
 
@@ -27,6 +27,39 @@ export class FetchTasks {
                 },
                 body: JSON.stringify({ title, description, date }),
             });
+
+            if (!resposta.ok) {
+                throw new Error("Erro na requisição: " + resposta.status);
+            }
+
+            const resultado = await resposta.json();
+            return resultado;
+        } catch (error) {
+            console.error("Erro ao enviar dados:", error);
+        }
+    }
+
+    async updatedTaskStatus(
+        id: number,
+        { title, description, aFazer, fazendo, feito }: UpdatedTarefa
+    ) {
+        try {
+            const resposta = await fetch(
+                `${urlBase}/api/v1/updated-task/${id}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        title,
+                        description,
+                        aFazer,
+                        fazendo,
+                        feito,
+                    }),
+                }
+            );
 
             if (!resposta.ok) {
                 throw new Error("Erro na requisição: " + resposta.status);
