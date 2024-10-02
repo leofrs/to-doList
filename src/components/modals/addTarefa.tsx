@@ -1,6 +1,6 @@
 import TarefasHook from "../../hooks/tarefas";
-import styles from "../../styles/modalAdd.module.scss";
-import FormAddTarefa from "../forms/formAddTarefa";
+import stylesModal from "../../styles/modal.module.scss";
+import FormAddTarefa from "../forms/formAdd";
 
 interface ModalAdd {
     isVisible: boolean;
@@ -12,13 +12,13 @@ const AdicionarTarefa = ({ isVisible, handleClose }: ModalAdd) => {
     const { handleRefreshTasks } = TarefasHook();
 
     return (
-        <div className={styles.modal_overlay} onClick={handleClose}>
+        <div className={stylesModal.modal_overlay} onClick={handleClose}>
             <div
-                className={styles.modal_content}
+                className={stylesModal.modal_content}
                 onClick={(e) => e.stopPropagation()}
             >
                 <h2>Adicionar Tarefa</h2>
-                <div className={styles.btn}>
+                <div className={stylesModal.btn}>
                     <FormAddTarefa
                         handleClose={handleClose}
                         refreshTasks={handleRefreshTasks}

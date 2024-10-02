@@ -43,6 +43,20 @@
             justify-content: space-between;
             padding: 12px 8px;
 
+            .title {
+                width: 100%;
+                height: auto;
+                .btnTitle ul {
+                    display: flex;
+                    list-style: none;
+                    align-items: center;
+                    gap: 16px;
+
+                    li {
+                        cursor: pointer;
+                    }
+                }
+            }
             div {
                 display: flex;
                 justify-content: space-between;

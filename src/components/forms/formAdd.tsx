@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import stylesFormAdd from "../../styles/formAddtask.module.scss";
+import stylesFormAdd from "../../styles/formAdd.module.scss";
 
 import { FetchTasks } from "../../api/tasks";
 
@@ -53,15 +53,21 @@ export default function FormAddTarefa({
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={stylesFormAdd.form}>
             <input
+                type="text"
                 {...register("title", { required: true })}
                 placeholder="Título"
                 autoFocus={true}
             />
             {errors.title && <span>Titulo é obrigatório</span>}
 
-            <input {...register("description")} placeholder="Descrição" />
+            <input
+                type="text"
+                {...register("description")}
+                placeholder="Descrição"
+            />
 
             <input
+                type="date"
                 {...register("date", {
                     required: true,
                     pattern: {

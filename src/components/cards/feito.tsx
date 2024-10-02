@@ -1,7 +1,6 @@
 import ModalsHook from "../../hooks/modals";
 import stylesContent from "../../styles/content.module.scss";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import Options from "../modals/options";
 
 import TarefasHook from "../../hooks/tarefas";
 
@@ -34,13 +33,6 @@ export default function Feito() {
                                 >
                                     <BsThreeDotsVertical />
                                 </button>
-                                {optionIsOpen && tarefaId === id ? (
-                                    <Options
-                                        handleOptions={handleOptions}
-                                        tarefaId={id}
-                                        tarefaTitle={title}
-                                    />
-                                ) : null}
                             </div>
                             <p>{description}</p>
                             <span>{date}</span>

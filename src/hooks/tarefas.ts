@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { FetchTasks } from "../api/tasks";
-import { Tarefa, UpdatedTarefa } from "../@types/tarefa";
+import { Tarefa, TarefaEdit, UpdatedTarefa } from "../@types/tarefa";
 
 export default function TarefasHook() {
     const [tarefas, setTarefas] = useState<Tarefa[]>([]);
     const [loading, setLoading] = useState(true);
+    const [selectedTarefa, setSelectedTarefa] = useState<TarefaEdit>();
 
     const ShowTarefas = async () => {
         const fetchTasks = new FetchTasks();
@@ -77,5 +78,7 @@ export default function TarefasHook() {
         handleAFazer,
         handleFazendo,
         handleFeita,
+        selectedTarefa,
+        setSelectedTarefa,
     };
 }

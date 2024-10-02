@@ -21,3 +21,10 @@ export interface UpdatedTarefa {
     fazendo: boolean;
     feito: boolean;
 }
+
+export interface TarefaEdit {
+    id: number;
+    title: string;
+    description: string;
+    date: string;
+}

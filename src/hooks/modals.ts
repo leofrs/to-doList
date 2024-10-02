@@ -2,10 +2,8 @@ import { useState } from "react";
 
 export default function ModalsHook() {
     const [addIsOpen, setAddIsOpen] = useState<boolean>(false);
-    const [excluirIsOpen, setExcluirIsOpen] = useState<boolean>(false);
     const [atualizarIsOpen, setAtualizarIsOpen] = useState<boolean>(false);
-    const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
-    const [tarefaId, setTarefaId] = useState<number>();
+    const [excluirIsOpen, setExcluirIsOpen] = useState<boolean>(false);
 
     const handleAdd = () => {
         setAddIsOpen(!addIsOpen);
@@ -17,22 +15,16 @@ export default function ModalsHook() {
 
     const handleAtualizar = () => {
         setAtualizarIsOpen(!atualizarIsOpen);
-    };
-
-    const handleOptions = (id: number) => {
-        setOptionIsOpen(!optionIsOpen);
-        setTarefaId(id);
+        console.log("clicado");
     };
 
     return {
         handleAdd,
         addIsOpen,
         handleAtualizar,
+        setAtualizarIsOpen,
         atualizarIsOpen,
         handleExcluir,
         excluirIsOpen,
-        handleOptions,
-        optionIsOpen,
-        tarefaId,
     };
 }

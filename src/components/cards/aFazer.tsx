@@ -1,18 +1,39 @@
 import ModalsHook from "../../hooks/modals";
 import stylesContent from "../../styles/content.module.scss";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import Options from "../modals/options";
 
 import TarefasHook from "../../hooks/tarefas";
 
+import { MdDeleteOutline } from "react-icons/md";
+import { MdModeEdit } from "react-icons/md";
+import EditarTarefa from "../modals/editartarefa";
+import { TarefaEdit } from "../../@types/tarefa";
+import ExcluirTarefa from "../modals/excluirTarefa";
+
 export default function AFazer() {
-    const { optionIsOpen, handleOptions, tarefaId } = ModalsHook();
-    const { tarefas, loading, ShowTarefas, handleFazendo, handleFeita } =
-        TarefasHook();
+    const { handleAtualizar, atualizarIsOpen, excluirIsOpen, handleExcluir } =
+        ModalsHook();
+    const {
+        tarefas,
+        loading,
+        ShowTarefas,
+        handleFazendo,
+        handleFeita,
+        setSelectedTarefa,
+        selectedTarefa,
+    } = TarefasHook();
 
     const tarefasAFazer = tarefas.filter((tarefa) => tarefa.aFazer === true);
 
     ShowTarefas();
+
+    const handleEditClick = (tarefa: TarefaEdit) => {
+        setSelectedTarefa(tarefa);
+        handleAtualizar();
+    };
+
+    const handleDelClick = () => {
+        handleExcluir();
+    };
 
     return (
         <div className={stylesContent.content_cards}>
@@ -25,25 +46,28 @@ export default function AFazer() {
                     const { id, title, description, date } = tarefa;
                     return (
                         <div key={id} className={stylesContent.content_title}>
-                            <div>
+                            <div className={stylesContent.title}>
                                 <h6>{title}</h6>
-                                <button
-                                    type="button"
-                                    title="details"
-                                    onClick={() => handleOptions(id)}
-                                >
-                                    <BsThreeDotsVertical />
-                                </button>
-                                {optionIsOpen && tarefaId === id ? (
-                                    <Options
-                                        handleOptions={handleOptions}
-                                        tarefaId={id}
-                                        tarefaTitle={title}
-                                    />
-                                ) : null}
+                                <div className={stylesContent.btnTitle}>
+                                    <ul>
+                                        <li
+                                            onClick={() =>
+                                                handleEditClick(tarefa)
+                                            }
+                                        >
+                                            <MdModeEdit size={24} />
+                                        </li>
+                                        <li onClick={() => handleDelClick()}>
+                                            <MdDeleteOutline size={24} />
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+
                             <p>{description}</p>
+
                             <span>{date}</span>
+
                             <div>
                                 <span
                                     className={stylesContent.handleBTN}
@@ -81,6 +105,21 @@ export default function AFazer() {
                 <div>
                     <p>Nenhuma tarefa à fazer</p>
                 </div>
+            )}
+
+            {selectedTarefa && (
+                <EditarTarefa
+                    isVisible={atualizarIsOpen}
+                    tarefa={selectedTarefa}
+                    handleAtualizar={handleAtualizar}
+                />
+            )}
+
+            {excluirIsOpen && (
+                <ExcluirTarefa
+                    isVisible={excluirIsOpen}
+                    handleExcluir={handleExcluir}
+                />
             )}
         </div>
     );
